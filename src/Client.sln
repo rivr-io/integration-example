@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{39114D72-5B5E-4E26-BC0F-7034CD4EB2E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CallbackService", "Callback\CallbackService.csproj", "{70831915-BC36-49E2-AAC6-20B61FCD8E31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallbackService", "CallbackService\CallbackService.csproj", "{7CF1C3B4-9658-4E69-9472-64FC53FD7037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{39114D72-5B5E-4E26-BC0F-7034CD4EB2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39114D72-5B5E-4E26-BC0F-7034CD4EB2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39114D72-5B5E-4E26-BC0F-7034CD4EB2E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70831915-BC36-49E2-AAC6-20B61FCD8E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70831915-BC36-49E2-AAC6-20B61FCD8E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70831915-BC36-49E2-AAC6-20B61FCD8E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70831915-BC36-49E2-AAC6-20B61FCD8E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF1C3B4-9658-4E69-9472-64FC53FD7037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF1C3B4-9658-4E69-9472-64FC53FD7037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF1C3B4-9658-4E69-9472-64FC53FD7037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF1C3B4-9658-4E69-9472-64FC53FD7037}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
