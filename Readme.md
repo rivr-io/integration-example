@@ -1,7 +1,7 @@
 # Baase Integration Example
 This repository contains a basic integration example created with .NET Core Example. With this code, you should be able to get a basic understanding about the effort needed to integrate with Baase.
 
-Please refer to the API documentation for details: https://one.baase.com/docs
+Please refer to the API documentation for details: https://www.rivr.io/docs
 
 ## API Methods covered
 This solution covers the creation of a *PaymentRequest* and how to call the *Health* endpoint as well.
@@ -31,4 +31,4 @@ This example integration creates an instance of an API Client which is used by t
 
 ## Support
 
-Please refer to [www.baase.com](https://www.baase.com) for support issues.
+Please refer to [www.rivr.io](https://www.rivr.io) for support issues.
