@@ -1,4 +1,4 @@
-# Baase Integration Example
+# Rivr Integration Example
 This repository contains a basic integration example created with .NET Core Example. With this code, you should be able to get a basic understanding about the effort needed to integrate with Baase.
 
 Please refer to the API documentation for details: https://www.rivr.io/docs
