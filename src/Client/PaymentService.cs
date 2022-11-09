@@ -16,7 +16,7 @@ public class PaymentService : IPaymentService
     public PaymentService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("https://test.baase.com/api/public/");
+        _httpClient.BaseAddress = new Uri("https://test.rivr.io/api/public/");
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "add-your-key-here");
     }
 
