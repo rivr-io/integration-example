@@ -1,0 +1,556 @@
+{
+	"info": {
+		"_postman_id": "bf7cd0dd-efb9-4b41-972c-253109653662",
+		"name": "Rivr Public API",
+		"description": "## Introduction\r\n\r\nThis documentation describes how merchant should integrate with the REST-services provided by Baase.\r\n\r\nThe API exposes three operations:\r\n\r\n- Health\r\n\t- Provides means to determine if the service is running. This does not rquire authentication.\r\n- Create Payment Request\r\n\t- Initiates the Payment flow.\r\n\t- If you provided a callback URL, you can expect notifications on that URL when the Payment Request changes state.\r\n- Get Payment Request\r\n\t- Get the current status of the Payment Request.\r\n\t- This operation returns the entire object.\r\n\r\n## Security\r\n\r\nMerchants must send an api key as an HTTP header in every request on all operations. Otherwise the call will be unauthorized. API keys are managed in the [Merchant Portal](/merchant). \r\n\r\n```\r\ncurl -H \"Authorization: Bearer your-api-key\" https://one.baase.com/api/public/payment-requests/...\r\n```\r\n\r\nAll traffic uses HTTPS with TLS version >=1.2\r\n\r\n## Endpoints\r\n\r\n| Environment | Base URL |\r\n| ----------- | ----------- | \r\n| Staging / Test | https://test.baase.com/ |\r\n| Production | https://one.baase.com/ |\r\n\r\n## Flow Description\r\n\r\nA normal (happy case) flow works like this:\r\n\r\n1. Merchant creates a Payment Request\r\n    - The response returns HTTP 201 created along with header `Location` stating where to find the created payment request.\r\n    - The operation is idempotent and supports multiple calls with the same identifier, which enables retries.\r\n    - If a callback URL is supplied, callbacks will be made when the Payment Request state changes.\r\n2. Merchant distributes the Payment Request link and/or QR code to its buyer\r\n    - The link and the QR code are supplied by the API upon creation of a Payment Request.\r\n3. Buyer uses the link to navigate to the Payment Request which is prefilled with the amount. \r\n    - The buyer fills in a contact details and a some regulatory information (also known as KYC).\r\n    - Baase gathers offers from multiple banks and present them to the buyer. \r\n    - Buyer accepts one of the offers\r\n    - Buyer signs contract from the selected bank\r\n4. When Buyer signs the contract, the Payment Request is considered complete.\r\n    - If a callback URL is supplied, this will be the final callback.\r\n\r\n![flow diagram](/images/docs/public-api-flow.drawio.png)\r\n\r\n\r\n## Callback\r\n\r\nWhen creating a Payment Request, a callback URL can be supplied. When the Payment Request changes state, a HTTP POST will be performed to the supplied URL having the following body: \r\n\r\n```\r\n{\r\n    \"PaymentRequestId\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\r\n    \"State\": \"Created\"\r\n}\r\n```\r\n\r\n`PaymentRequestId` has the same value as when the PaymentRequest was created. State may be one of the following: \r\n\r\n```\r\n    \"Created\",\r\n    \"Submitted\",\r\n    \"OfferReceived\",\r\n    \"Accepted\",\r\n    \"Denied\"\r\n```\n\nContact Support:\n Name: Baase AB\n Email: support@baase.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23960302"
+	},
+	"item": [
+		{
+			"name": "api/public",
+			"item": [
+				{
+					"name": "payment-requests/{payment Request Id}",
+					"item": [
+						{
+							"name": "Create Payment Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f11\",\n  \"merchantId\": \"495be9fc-841a-499f-8397-256f13d2414f\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"payment-requests",
+										":paymentRequestId"
+									],
+									"variable": [
+										{
+											"key": "paymentRequestId",
+											"value": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+											"description": "(Required) The unique identifier (UUID) of the payment request. This have to be unique for each payment request and is set by the calling service."
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Created",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"merchantId\": \"c3073b9d-edd0-49f2-a28d-b7ded8ff9a8b\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The unique identifier (UUID) of the payment request. This have to be unique for each payment request and is set by the calling service."
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"merchantId\": \"c3073b9d-edd0-49f2-a28d-b7ded8ff9a8b\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\",\n  \"url\": \"Generated by Baase\",\n  \"qrCode\": \"Generated by Baase\",\n  \"snippet\": \"Generated by Baase\",\n  \"state\": null\n}"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"merchantId\": \"c3073b9d-edd0-49f2-a28d-b7ded8ff9a8b\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The unique identifier (UUID) of the payment request. This have to be unique for each payment request and is set by the calling service."
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"errors\": [\n      {\n        \"propertyName\": \"aliqua do commodo Ex\",\n        \"message\": \"dolor\"\n      },\n      {\n        \"propertyName\": \"Ut nulla sit consectetur in\",\n        \"message\": \"ullamco in\"\n      }\n    ]\n  },\n  {\n    \"errors\": [\n      {\n        \"propertyName\": \"magna veniam laboris ad incididunt\",\n        \"message\": \"pariatur laborum Lorem in\"\n      },\n      {\n        \"propertyName\": \"do aliqua\",\n        \"message\": \"aute veniam irure\"\n      }\n    ]\n  }\n]"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"merchantId\": \"c3073b9d-edd0-49f2-a28d-b7ded8ff9a8b\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The unique identifier (UUID) of the payment request. This have to be unique for each payment request and is set by the calling service."
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"merchantId\": \"c3073b9d-edd0-49f2-a28d-b7ded8ff9a8b\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The unique identifier (UUID) of the payment request. This have to be unique for each payment request and is set by the calling service."
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Retrieve Payment Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"payment-requests",
+										":paymentRequestId"
+									],
+									"variable": [
+										{
+											"key": "paymentRequestId",
+											"value": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+											"description": "(Required) The identifier of the payment request to retrieve.\r\n                <example>da4316b7-e2f4-42b0-b0a8-1ed6c24f9738</example>"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The identifier of the payment request to retrieve.\r\n                <example>da4316b7-e2f4-42b0-b0a8-1ed6c24f9738</example>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"497f6eca-6276-4993-bfeb-53cbbbba6f08\",\n  \"merchantId\": \"c3073b9d-edd0-49f2-a28d-b7ded8ff9a8b\",\n  \"reference\": \"order-1234\",\n  \"amount\": 42000,\n  \"callbackUrl\": \"https://www.example.com/my/callback\",\n  \"url\": \"Generated by Baase\",\n  \"qrCode\": \"Generated by Baase\",\n  \"snippet\": \"Generated by Baase\",\n  \"state\": null\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The identifier of the payment request to retrieve.\r\n                <example>da4316b7-e2f4-42b0-b0a8-1ed6c24f9738</example>"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The identifier of the payment request to retrieve.\r\n                <example>da4316b7-e2f4-42b0-b0a8-1ed6c24f9738</example>"
+												}
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: bearer",
+												"key": "Authorization",
+												"value": "Bearer <token>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/public/payment-requests/:paymentRequestId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"public",
+												"payment-requests",
+												":paymentRequestId"
+											],
+											"variable": [
+												{
+													"key": "paymentRequestId",
+													"value": "urn:uuid:12b5a621-b89a-3b21-75e2-5f19beac54e5",
+													"description": "(Required) The identifier of the payment request to retrieve.\r\n                <example>da4316b7-e2f4-42b0-b0a8-1ed6c24f9738</example>"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Health check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/public/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"health"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/public/health",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
