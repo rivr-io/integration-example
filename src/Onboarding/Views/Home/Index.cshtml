@@ -1,0 +1,27 @@
+﻿<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Onboarding example</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 px-3">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Onboarding</a>
+    </nav>
+</header>
+<div class="align-items-center d-flex flex-column">
+    <h1 class="display-4 text-center">Welcome</h1>
+    @if (ViewBag.Snippet == null)
+    {
+        <a asp-controller="Home" asp-action="CreateMerchant">Sign up</a>
+    }
+    else
+    {
+        <div class="col-12 col-md-6">
+            @Html.Raw(ViewBag.Snippet)
+        </div>
+    }
+</div>
+
+<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/ADD-YOUR-ID-HERE"></script>
+</body>
