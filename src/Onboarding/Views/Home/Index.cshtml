@@ -10,19 +10,20 @@
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Onboarding</a>
     </nav>
 </header>
-<div class="container align-items-center d-flex flex-column">
+<div class="align-items-center d-flex flex-column">
     <h1 class="display-4 text-center">Welcome</h1>
     @if (ViewBag.Snippet == null)
     {
-        <a asp-controller="Home" asp-action="InitiateOnboarding">Sign up</a>
+        <a asp-controller="Home" asp-action="CreateMerchant">Sign up</a>
     }
     else
     {
-        @Html.Raw(ViewBag.Snippet)
+        <div class="col-12 col-md-6">
+            @Html.Raw(ViewBag.Snippet)
+        </div>
     }
 </div>
 
+<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/ADD-YOUR-ID-HERE"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/YOUR-ID-HERE"></script>
 </body>
