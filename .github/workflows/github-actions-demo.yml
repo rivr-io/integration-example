@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Build and test
 run-name: ${{ github.actor }} pushed new code 🚀
 on: [push]
 jobs:
@@ -19,9 +19,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore .\src\
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build .\src\ --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test .\src\ --no-restore --verbosity normal
       - run: echo "🍏 This job's status is ${{ job.status }}."
