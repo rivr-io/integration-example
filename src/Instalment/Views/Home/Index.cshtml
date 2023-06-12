@@ -1,19 +1,19 @@
 ﻿<head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Onboarding example</title>
+    <title>Instalment example</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 px-3">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Onboarding</a>
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Instalment</a>
     </nav>
 </header>
-<div class="container align-items-center d-flex flex-column my-3 px-0 bg-transparent">
+<div class="container align-items-center d-flex flex-column border rounded-3 my-3 px-0 bg-transparent">
     @if (ViewBag.Snippet == null)
     {
-        <a asp-controller="Home" asp-action="CreateMerchant">Sign up</a>
+        <a asp-controller="Home" asp-action="InitiateInstalment">Initiate</a>
     }
     else
     {
@@ -22,6 +22,6 @@
 </div>
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/8215d09f-2500-495f-a3f3-c2b5f145cddd"></script>
+<!-- Load our scripts at the bottom of your page -->
+<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/YOUR_ID_HERE"></script>
 </body>

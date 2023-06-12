@@ -28,4 +28,12 @@ public class CallbackController : ControllerBase
 
         return Task.CompletedTask;
     }
+
+    [HttpPost("instalment")]
+    public Task Callback([FromBody] InstalmentCallbackModel callbackModel)
+    {
+        _logger.LogInformation($"Received callback for instalment: {callbackModel.InstalmentId}. Status: {callbackModel.Status}");
+
+        return Task.CompletedTask;
+    }
 }
