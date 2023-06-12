@@ -2,6 +2,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Onboarding example</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body>
 <header>
@@ -9,19 +10,18 @@
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Onboarding</a>
     </nav>
 </header>
-<div class="align-items-center d-flex flex-column">
-    <h1 class="display-4 text-center">Welcome</h1>
+<div class="container align-items-center d-flex flex-column my-3 px-0 bg-transparent">
     @if (ViewBag.Snippet == null)
     {
         <a asp-controller="Home" asp-action="CreateMerchant">Sign up</a>
     }
     else
     {
-        <div class="col-12 col-md-6">
-            @Html.Raw(ViewBag.Snippet)
-        </div>
+        @Html.Raw(ViewBag.Snippet)
     }
 </div>
 
-<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/ADD-YOUR-ID-HERE"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/8215d09f-2500-495f-a3f3-c2b5f145cddd"></script>
 </body>

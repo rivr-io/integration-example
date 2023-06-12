@@ -1,4 +1,3 @@
-using Instalment.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CallbackService.Controllers;
