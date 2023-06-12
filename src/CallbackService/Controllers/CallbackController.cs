@@ -13,10 +13,18 @@ public class CallbackController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost]
-    public Task Callback([FromBody] CallbackModel callbackModel)
+    [HttpPost("payment")]
+    public Task PaymentCallback([FromBody] PaymentCallbackModel callbackModel)
     {
         _logger.LogInformation($"Received callback for {callbackModel.PaymentRequestId}, state: {callbackModel.State}");
+
+        return Task.CompletedTask;
+    }
+
+    [HttpPost("onboarding")]
+    public Task OnboardingCallback([FromBody] OnboardingCallbackModel callbackModel)
+    {
+        _logger.LogInformation($"Received callback for {callbackModel.MerchantId}, state: {callbackModel.State}");
 
         return Task.CompletedTask;
     }

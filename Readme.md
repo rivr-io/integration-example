@@ -4,11 +4,12 @@ This repository contains a basic integration example created with .NET Core Exam
 Please refer to the API documentation for details: https://www.rivr.io/docs
 
 ## API Methods covered
-This solution covers the creation of a *PaymentRequest* and how to call the *Health* endpoint as well.
+This solution covers the creation of a *PaymentRequest*, the creation of a *Merchant* (only for platforms) and how to call the *Health* endpoint as well.
 
 These are the methods covered: 
 - PUT /payment-requests
 - GET /health
+- PUT /platforms
 
 ## Getting started
 Clone the repository and use your preferred .NET Core development suite to build the solution.
@@ -17,12 +18,16 @@ Before you run the solution you need to obtain the following information:
 - Merchant ID
 - Merchant API Key
 - Callback URL (leave empty if you don't want to test callbacks)
+Or for a platform
+- Platform ID
+- Platform API key
 
 Enter the information in the required places and run the code:
 
 ```
 dotnet run --project .\src\Client\Client.csproj
 dotnet run --project .\src\CallbackService\Client.csproj
+dotnet run --project .\src\Onboarding\Onboarding.csproj
 ```
 
 ## Workflow

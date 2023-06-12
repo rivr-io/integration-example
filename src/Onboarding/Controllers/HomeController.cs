@@ -21,12 +21,12 @@ namespace Onboarding.Controllers
             return View();
         }
 
-        public async Task<IActionResult> InitiateOnboarding()
+        public async Task<IActionResult> CreateMerchant()
         {
             var merchantId = Guid.NewGuid();
 
             var response =
-                await _httpClient.PutAsJsonAsync($"{_platformId}/{merchantId}", new
+                await _httpClient.PutAsJsonAsync($"platforms/{_platformId}/{merchantId}", new
                 {
                     CallbackUrl = "https://your-callback-url"
                 });
