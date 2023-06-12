@@ -1,3 +1,4 @@
+using Instalment.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CallbackService.Controllers;
@@ -25,6 +26,14 @@ public class CallbackController : ControllerBase
     public Task OnboardingCallback([FromBody] OnboardingCallbackModel callbackModel)
     {
         _logger.LogInformation($"Received callback for {callbackModel.MerchantId}, state: {callbackModel.State}");
+
+        return Task.CompletedTask;
+    }
+
+    [HttpPost("instalment")]
+    public Task Callback([FromBody] InstalmentCallbackModel callbackModel)
+    {
+        _logger.LogInformation($"Received callback for instalment: {callbackModel.InstalmentId}. Status: {callbackModel.Status}");
 
         return Task.CompletedTask;
     }
