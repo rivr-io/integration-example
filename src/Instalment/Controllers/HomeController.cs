@@ -42,6 +42,7 @@ public class HomeController : Controller
         var responseAsJson = await response.Content.ReadFromJsonAsync<InitiateInstalmentResponse>();
 
         ViewBag.Snippet = responseAsJson?.Snippet;
+        ViewBag.Link = responseAsJson?.Link;
 
         return View("Index");
     }
@@ -50,6 +51,7 @@ public class HomeController : Controller
 public class InitiateInstalmentResponse
 {
     public string Snippet { get; set; } = null!;
+    public string Link { get; set; } = null!;
 }
 
 public class InitiateInstalmentRequest

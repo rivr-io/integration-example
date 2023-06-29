@@ -6,14 +6,14 @@ namespace Onboarding.Controllers
     public class HomeController : Controller
     {
         private readonly HttpClient _httpClient;
-        private readonly string _platformId;
+        private readonly string _platformId = "YOUR_PLATFORM_ID_HERE";
+        private readonly string _platformApiKey = "YOUR_API_TOKEN_HERE";
 
         public HomeController(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://test.rivr.io/api/public/");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "YOUR_API_TOKEN_HERE");
-            _platformId = "YOUR_PLATFORM_ID_HERE";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _platformApiKey);
         }
 
         public IActionResult Index()
@@ -36,6 +36,7 @@ namespace Onboarding.Controllers
             var responseAsJson = await response.Content.ReadFromJsonAsync<CreateMerchantResponse>();
 
             ViewBag.Snippet = responseAsJson?.Snippet;
+            ViewBag.Link = responseAsJson?.Link;
 
             return View("Index");
         }
@@ -48,6 +49,7 @@ namespace Onboarding.Controllers
     
     public class CreateMerchantResponse
     {
-        public string? Snippet { get; set; }
+        public string Snippet { get; set; } = null!;
+        public string Link { get; set; } = null!;
     }
 }

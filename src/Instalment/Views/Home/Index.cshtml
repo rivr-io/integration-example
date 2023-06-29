@@ -13,15 +13,26 @@
 <div class="container align-items-center d-flex flex-column my-3 px-0 py-2 bg-transparent">
     @if (ViewBag.Snippet == null)
     {
+        <!--Action that initiates instalment and returns Snippet/Link-->
         <a asp-controller="Home" asp-action="InitiateInstalment">Initiate</a>
     }
     else
     {
-        @Html.Raw(ViewBag.Snippet)
+        <!--Using returned link in iframe-->
+        <div class="col-12 col-md-6">
+            <h4>With link and iframe</h4>
+            <iframe src="@ViewBag.Link"></iframe>
+        </div>
+        <hr/>
+        <!--Inserting raw html snippet-->
+        <div class="col-12 col-md-6">
+            <h4>With raw html snippet</h4>
+            @Html.Raw(ViewBag.Snippet)
+        </div>
     }
 </div>
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Load our scripts at the bottom of your page -->
-    <script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/YOUR_PLATFORM_ID_HERE"></script>
+<!--Script is needed to use raw html and code injection-->
+<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/YOUR_PLATFORM_ID_HERE"></script>
 </body>

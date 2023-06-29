@@ -2,6 +2,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Onboarding example</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
 <header>
@@ -10,20 +11,28 @@
     </nav>
 </header>
 <div class="align-items-center d-flex flex-column">
-    <h1 class="display-4 text-center">Welcome</h1>
-    @if (ViewBag.Snippet == null)
+    @if (ViewBag.Link == null)
     {
+        <!--Action that initiates onboarding and returns Snippet/Link-->
         <a asp-controller="Home" asp-action="CreateMerchant">Sign up</a>
     }
     else
     {
+        <!--Using returned link in iframe-->
         <div class="col-12 col-md-6">
+            <h4>With link and iframe</h4>
+            <iframe src="@ViewBag.Link"></iframe>
+        </div>
+        <hr/>
+        <!--Inserting raw html snippet-->
+        <div class="col-12 col-md-6">
+            <h4>With raw html snippet</h4>
             @Html.Raw(ViewBag.Snippet)
         </div>
     }
 </div>
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+<!--Script is needed to use raw html and code injection-->
 <script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/YOUR_PLATFORM_ID_HERE"></script>
 </body>
