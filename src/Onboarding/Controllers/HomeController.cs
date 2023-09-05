@@ -6,14 +6,14 @@ namespace Onboarding.Controllers
     public class HomeController : Controller
     {
         private readonly HttpClient _httpClient;
-        private readonly string _platformId;
+        private readonly string _platformId = "YOUR_PLATFORM_ID";
+        private readonly string _platformApiKey = "YOUR_API_KEY";
 
         public HomeController(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://test.rivr.io/api/public/");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "YOUR_API_TOKEN_HERE");
-            _platformId = "YOUR_PLATFORM_ID_HERE";
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _platformApiKey);
         }
 
         public IActionResult Index()
@@ -28,6 +28,7 @@ namespace Onboarding.Controllers
             var response =
                 await _httpClient.PutAsJsonAsync($"platforms/{_platformId}/onboarding/{merchantId}", new CreateMerchantRequest
                 {
+                    OrganisationNumber = "ORG_NUMBER",
                     CallbackUrl = "https://your-callback-url"
                 });
 
@@ -43,6 +44,15 @@ namespace Onboarding.Controllers
 
     public class CreateMerchantRequest
     {
+        /// <summary>
+        /// Organisation number for the company that is being onboarded
+        /// </summary>
+        /// <example>1234567890</example>
+        public string OrganisationNumber { get; set; } = null!;
+        /// <summary>
+        /// URL that Rivr will use to notify caller about the outcome of the onboarding. The URL has to use HTTPS. Rivr will perform a HTTP POST with <see cref="Callback"/>
+        /// </summary>
+        /// <example>https://www.example.com/my/callback</example>
         public string? CallbackUrl { get; set; }
     }
     
