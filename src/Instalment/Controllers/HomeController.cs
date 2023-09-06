@@ -31,10 +31,10 @@ public class HomeController : Controller
                 new InitiateInstalmentRequest
                 {
                     MerchantId = Guid.Parse(_merchantId),
-                    Reference = "OCR-123456789",
+                    Reference = "123456789",
                     Amount = 3000,
                     PersonalNumber = "9001010017",
-                    CallbackUrl = "https://localhost:7265/callback"
+                    CallbackUrl = "https://your-callback-url"
                 });
 
         response.EnsureSuccessStatusCode();
