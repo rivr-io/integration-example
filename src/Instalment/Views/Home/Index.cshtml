@@ -18,15 +18,7 @@
     }
     else
     {
-        <!--Using returned link in iframe-->
         <div class="col-12 col-md-6">
-            <h4>With link and iframe</h4>
-            <iframe src="@ViewBag.Link"></iframe>
-        </div>
-        <hr/>
-        <!--Inserting raw html snippet-->
-        <div class="col-12 col-md-6">
-            <h4>With raw html snippet</h4>
             @Html.Raw(ViewBag.Snippet)
         </div>
     }
@@ -34,5 +26,5 @@
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--Script is needed to use raw html and code injection-->
-<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/YOUR_PLATFORM_ID_HERE"></script>
+<script async defer type="text/javascript" src="https://test.rivr.io/api/scripts/PLATFORM_ID"></script>
 </body>
